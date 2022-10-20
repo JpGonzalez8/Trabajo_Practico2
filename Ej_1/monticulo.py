@@ -1,15 +1,15 @@
 class MonticuloBinario:
-    def _iter_(self):
+    def __iter__(self):
         for i in self.lista_monticulo:
             yield i
         
-    def _str_(self):
+    def __str__(self):
         return str(self.lista_monticulo)
     
-    def _len_(self):
+    def __len__(self):
         return self.tamano_actual
     
-    def _init_(self):
+    def __init__(self):
         self.lista_monticulo = [0]
         self.tamano_actual = 0 
     
@@ -52,7 +52,7 @@ class MonticuloBinario:
             else:
                 return i * 2 + 1
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     mont=MonticuloBinario()
     mont.infilt_arriba(1)
     print(mont.tamano_actual)
