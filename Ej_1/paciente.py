@@ -9,21 +9,21 @@ descripciones_de_riesgo = ['crítico', 'moderado', 'bajo']
 probabilidades = [0.1, 0.3, 0.6] 
 
 class Paciente:
-    def _init_(self,orden):
+    def __init__(self,orden):
         n = len(nombres)
-        self.__nombre = nombres[randint(0, n-1)]
-        self.__apellido = apellidos[randint(0, n-1)]
-        self.__riesgo = choices(niveles_de_riesgo, probabilidades)[0]
+        self._nombre = nombres[randint(0, n-1)]
+        self._apellido = apellidos[randint(0, n-1)]
+        self._riesgo = choices(niveles_de_riesgo, probabilidades)[0]
         self._descripcion = descripciones_de_riesgo[self._riesgo-1]
-        self.__orden = orden
+        self._orden = orden
         
-    def _str_(self):
-          cad = self.__nombre + ' '
-          cad += self.__apellido + '\t -> '
+    def __str__(self):
+          cad = self._nombre + ' '
+          cad += self._apellido + '\t -> '
           cad += str(self._riesgo) + '-' + self._descripcion
           return cad    
         
-    def _lt_(self,other):
+    def __lt__(self,other):
         if self._riesgo == other._riesgo:
             return self._orden < other._orden
         return self._riesgo < other._riesgo
@@ -39,3 +39,7 @@ class Paciente:
     
     def get_descripcion_riesgo(self):
         return self.__descripcion
+
+if __name__ == "__main__":
+    obj = Paciente(1)
+    print(obj)

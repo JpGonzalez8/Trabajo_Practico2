@@ -11,7 +11,7 @@ class MonticuloBinario:
     
     def __init__(self):
         self.lista_monticulo = [0]
-        self.tamano_actual = 0 
+        self.tamano_actual = 0
     
     def infilt_arriba(self,i):
         while i // 2 > 0:
@@ -55,4 +55,7 @@ class MonticuloBinario:
 if __name__ == "__main__":
     mont=MonticuloBinario()
     mont.infilt_arriba(1)
+    mont.insertar(2)
+    mont.insertar(2)
+    print(mont)
     print(mont.tamano_actual)
