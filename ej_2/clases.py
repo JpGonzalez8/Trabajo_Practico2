@@ -18,6 +18,21 @@ class NodoArbol:
           if self.tiene_hijo_derecho():
               for elem in self.der:
                   yield elem
+                  
+    
+    def encontrarSucesor(self):
+      suc = None
+      if self.tiene_hijo_derecho():
+          suc = self.der.encontrarMin()
+      else:
+          if self.padre:
+                 if self.eshijo_izquierdo():
+                     suc = self.padre
+                 else:
+                     self.padre.der = None
+                     suc = self.padre.encontrarSucesor()
+                     self.padre.der = self
+      return suc
 
    def tiene_hijo_izquierdo(self):
         return self.izq
@@ -159,21 +174,6 @@ class ArbolAVL:
                   self.der.padre = self.padre
 
 
-    def encontrarSucesor(self):
-      suc = None
-      if self.tiene_hijo_derecho():
-          suc = self.der.encontrarMin()
-      else:
-          if self.padre:
-                 if self.eshijo_izquierdo():
-                     suc = self.padre
-                 else:
-                     self.padre.der = None
-                     suc = self.padre.encontrarSucesor()
-                     self.padre.der = self
-      return suc
-
-
     def encontrarMin(self):
       actual = self
       while actual.tiene_hijo_izquierdo():
@@ -287,7 +287,20 @@ class ArbolAVL:
                 self.rotarDerecha(nodo)
                 
                 
-                
+class Iterador:
+    def __init__(self, arbol, inicio):
+        self.inicio = arbol.obtener(inicio)
+    
+    def __next__(self):
+        nodo_salida = self.inicio
+        self.inicio = self.arbol.encontrarSucesor()
+        if self.inicio == None:
+            raise StopIteration
+        return nodo_salida
+    
+    def __iter__(self):
+        return self
+        
                 
 if __name__ == "__main__":
     mediciones = ArbolAVL()
@@ -296,10 +309,16 @@ if __name__ == "__main__":
     mediciones.agregar(date(2022,12,11),19)
     mediciones.agregar(date(2022,12,1),18)
     mediciones.agregar(date(2021,3,13),16)    
-    mediciones.agregar(date(2019,4,19),11)                   
+    mediciones.agregar(date(2019,4,19),11)    
+    
     print(mediciones.tamano)
     print(mediciones.raiz.clave)
     print()
     
     for nodo in mediciones:
         print (nodo.clave, nodo.carga_util)
+        
+    iterador = Iterador(mediciones, mediciones.raiz)
+    for nodo in iterador:
+        print (nodo)
+    
