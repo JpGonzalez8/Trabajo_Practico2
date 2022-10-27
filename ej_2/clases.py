@@ -287,7 +287,21 @@ class ArbolAVL:
                 self.rotarDerecha(nodo)
                 
                 
-                
+class Iterador:
+    def __init__(self, arbol, clave_inicio):
+        self.arbol = arbol
+        self.nodo_inicio = arbol._obtener(clave_inicio, self.arbol.raiz)
+    
+    def __next__(self):
+        nodo_salida = self.nodo_inicio
+        self.nodo_inicio = self.nodo_inicio.encontrarSucesor()
+        if self.nodo_inicio == None:
+            raise StopIteration
+        return nodo_salida
+    
+    def __iter__(self):
+        return self
+        
                 
 if __name__ == "__main__":
     mediciones = ArbolAVL()
@@ -296,10 +310,17 @@ if __name__ == "__main__":
     mediciones.agregar(date(2022,12,11),19)
     mediciones.agregar(date(2022,12,1),18)
     mediciones.agregar(date(2021,3,13),16)    
-    mediciones.agregar(date(2019,4,19),11)                   
+    mediciones.agregar(date(2019,4,19),11)    
+    
     print(mediciones.tamano)
     print(mediciones.raiz.clave)
     print()
     
     for nodo in mediciones:
         print (nodo.clave, nodo.carga_util)
+        
+    iterador = Iterador(mediciones, date(2021,11,9))
+    
+    for nodo in iterador:
+        print (nodo)
+    
