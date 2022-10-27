@@ -4,13 +4,17 @@ Created on Thu Oct 20 11:36:21 2022
 
 @author: alumno
 """
-
+import datetime
 from  Temperaturas_DB import ArbolAVL, NodoArbol 
 
 class Temperaturas_DB:
     
     def __init__(self):
         self.mediciones = ArbolAVL()
+        
+    def fecha_a_int(self,fecha):
+        fecha = datetime.strptime(fecha,'%d/%m/%Y')
+        return fecha
         
     def guardar_temperatura(self,temperatura,fecha):
         self.mediciones.agregar(temperatura, fecha)
